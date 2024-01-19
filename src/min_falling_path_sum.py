@@ -34,8 +34,8 @@ def min_falling_path_sum(matrix: list[list[int]]) -> int:
 
 
 if __name__ == '__main__':
-    matrix = [[100, -42, -46, -41],
-              [31, 97, 10, -10],
-              [-58, -51, 82, 89],
-              [51, 81, 69, -51]]
-    ic(min_falling_path_sum(matrix))
+    m = [[100, -42, -46, -41],
+         [31, 97, 10, -10],
+         [-58, -51, 82, 89],
+         [51, 81, 69, -51]]
+    ic(min_falling_path_sum(m))
