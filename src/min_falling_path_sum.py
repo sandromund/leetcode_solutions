@@ -16,6 +16,8 @@ def min_falling_path_sum(matrix: list[list[int]]) -> int:
     Time complexity: O(n) the number of cells in the matrix
     Space complexity: O(n) < number of cells * 3
 
+    109 ms Beats 40.22% of users with Python
+    12.54 MB Beats 100.00% of users with Python
     """
     n = len(matrix)
     steps = [[0] * n] * n
