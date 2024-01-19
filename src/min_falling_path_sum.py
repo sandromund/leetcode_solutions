@@ -21,19 +21,21 @@ def min_falling_path_sum(matrix: list[list[int]]) -> int:
     steps = [[0] * n] * n
     steps[0] = matrix[0]
     for i in range(1, n):
+        step = []
         for j in range(n):
-            candidates = [steps[i-1][j]]
-            if j-1 >= 0:
-                candidates.append(steps[i-1][j-1])
-            if j+1 < n:
-                candidates.append(steps[i-1][j+1])
-            steps[i][j] = matrix[i][j] + min(candidates)
-    return min(steps[n-1])
+            candidates = [steps[i - 1][j]]
+            if j - 1 >= 0:
+                candidates.append(steps[i - 1][j - 1])
+            if j + 1 < n:
+                candidates.append(steps[i - 1][j + 1])
+            step.append(matrix[i][j] + min(candidates))
+        steps[i] = step
+    return min(steps[n - 1])
 
 
 if __name__ == '__main__':
     matrix = [[100, -42, -46, -41],
-              [31,   97,  10, -10],
-              [-58, -51,  82, 89],
-              [51,   81,  69, -51]]
+              [31, 97, 10, -10],
+              [-58, -51, 82, 89],
+              [51, 81, 69, -51]]
     ic(min_falling_path_sum(matrix))
