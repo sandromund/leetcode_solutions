@@ -21,6 +21,8 @@ def rob(nums: List[int]) -> int:
 
     Solved it fast without any help. :)
 
+    Space can be optimized to O(1)
+
     Runtime Beats 86.54% of users with Python3
     Memory Beats 56.96% of users with Python3
     """
@@ -38,4 +40,4 @@ def rob(nums: List[int]) -> int:
 
 
 if __name__ == '__main__':
-    ic(rob([2, 1, 1, 2]))
+    ic(rob([1, 2, 3]))
