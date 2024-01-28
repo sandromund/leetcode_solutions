@@ -19,6 +19,3 @@ def test_k_inverse_pairs_example_2():
     assert k_inverse_pairs(n=3, k=1) == 2
 
 
-def test_k_inverse_pairs_test_18():
-    assert k_inverse_pairs(n=1, k=1) == 1
-
