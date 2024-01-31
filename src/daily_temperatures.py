@@ -11,4 +11,12 @@ from typing import List
 
 
 def daily_temperatures(temperatures: List[int]) -> List[int]:
-    return [0]
+    n = len(temperatures)
+    solution = [0] * n
+    stack = []
+    for i in range(n):
+        while stack and temperatures[stack[-1]] < temperatures[i]:
+            index = stack.pop()
+            solution[index] = i - index
+        stack.append(i)
+    return solution
