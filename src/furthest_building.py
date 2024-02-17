@@ -21,18 +21,68 @@ from typing import List
 from icecream import ic
 
 
-def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
-    bricks_required = 0
+def get_diffs(heights: List[int]):
+    """
+    ic| heights:    [ 4, 2, 7, 6, 9, 14, 12]
+    ic| index_list: [-1,-1, 0, 0, 1, 2,  2]
+    ic| diffs: [5, 3, 5]
+
+    """
     n = len(heights)
     diffs = []
-    index_list = [0] * n
-    index_index = -1
-    for i in range(1, n - 1):
+    indices = [-1]
+    diffs_i = -1
+    for i in range(n - 1):
         k = heights[i + 1] - heights[i]
         if k > 0:
             diffs.append(k)
-            index_index += 1
-        index_list[i] = index_index
+            diffs_i += 1
+        indices.append(diffs_i)
+    return diffs, indices
+
+
+def get_diff_sums(diffs):
+    r = []
+    k = 0
+    for d in diffs:
+        k += d
+        r.append(k)
+    return r
+
+
+def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
+    diffs, index_list = get_diffs(heights)
+
+    ladder_bricks = []  # indices of the biggest diffs we can replace with ladders
+    sei = None  # smallest_element_index
+    diff_sums = get_diff_sums(diffs)
+
+    goal_i = -1
+    for i, diff in enumerate(diffs):
+        if len(ladder_bricks) < ladders:
+            ladder_bricks.append(diff)
+            if sei is None:
+                sei = 0
+            elif ladder_bricks[sei] < diff:
+                sei = len(ladder_bricks) - 1
+        elif ladder_bricks[sei] < diff:
+            ladder_bricks[sei] = diff
+
+        if not(bricks + sum(ladder_bricks) >= diff_sums[i]):
+            break
+        goal_i += 1
+
+        ic(goal_i, ladder_bricks)
+
+    result = index_list.index(goal_i)
+
+    ic(heights)
     ic(index_list)
     ic(diffs)
-    return -1
+    ic(diff_sums)
+    ic(result)
+    return result
+
+
+if __name__ == '__main__':
+    furthest_building(heights=[4, 2, 7, 6, 9, 14, 12], bricks=5, ladders=1)
