@@ -14,6 +14,8 @@ If the current building's height is less than the next building's height, you ca
 Return the furthest building index (0-indexed) you can reach if you use the given ladders and bricks optimally.
 
 
+Time Limit Exceeded in this solution
+
 """
 
 from typing import List
@@ -41,24 +43,16 @@ def get_diffs(heights: List[int]):
     return diffs, indices
 
 
-def get_diff_sums(diffs):
-    r = []
-    k = 0
-    for d in diffs:
-        k += d
-        r.append(k)
-    return r
-
-
 def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
     diffs, index_list = get_diffs(heights)
 
     ladder_bricks = []  # indices of the biggest diffs we can replace with ladders
     sei = None  # smallest_element_index
-    diff_sums = get_diff_sums(diffs)
+    diff_sum = 0
 
     goal_i = -1
     for i, diff in enumerate(diffs):
+        diff_sum += diff
         if ladders > 0:
             if len(ladder_bricks) < ladders:
                 ladder_bricks.append(diff)
@@ -70,19 +64,11 @@ def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
                 ladder_bricks[sei] = diff
                 sei = ladder_bricks.index(min(ladder_bricks))
 
-        ic(goal_i, ladder_bricks, diff_sums[i], sum(ladder_bricks), bricks)
-
-        if not (bricks + sum(ladder_bricks) >= diff_sums[i]):
+        if not (bricks + sum(ladder_bricks) >= diff_sum):
             break
         goal_i += 1
-
     result = len(index_list) - 1 - index_list[::-1].index(goal_i)
 
-    ic(heights)
-    ic(index_list)
-    ic(diffs)
-    ic(diff_sums)
-    ic(result)
     return result
 
 
