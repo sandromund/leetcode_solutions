@@ -59,22 +59,24 @@ def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
 
     goal_i = -1
     for i, diff in enumerate(diffs):
-        if len(ladder_bricks) < ladders:
-            ladder_bricks.append(diff)
-            if sei is None:
-                sei = 0
+        if ladders > 0:
+            if len(ladder_bricks) < ladders:
+                ladder_bricks.append(diff)
+                if sei is None:
+                    sei = 0
+                elif ladder_bricks[sei] > diff:
+                    sei = len(ladder_bricks) - 1
             elif ladder_bricks[sei] < diff:
-                sei = len(ladder_bricks) - 1
-        elif ladder_bricks[sei] < diff:
-            ladder_bricks[sei] = diff
+                ladder_bricks[sei] = diff
+                sei = ladder_bricks.index(min(ladder_bricks))
 
-        if not(bricks + sum(ladder_bricks) >= diff_sums[i]):
+        ic(goal_i, ladder_bricks, diff_sums[i], sum(ladder_bricks), bricks)
+
+        if not (bricks + sum(ladder_bricks) >= diff_sums[i]):
             break
         goal_i += 1
 
-        ic(goal_i, ladder_bricks)
-
-    result = index_list.index(goal_i)
+    result = len(index_list) - 1 - index_list[::-1].index(goal_i)
 
     ic(heights)
     ic(index_list)
@@ -85,4 +87,4 @@ def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
 
 
 if __name__ == '__main__':
-    furthest_building(heights=[4, 2, 7, 6, 9, 14, 12], bricks=5, ladders=1)
+    furthest_building(heights=[14, 3, 19, 3], bricks=17, ladders=0)
